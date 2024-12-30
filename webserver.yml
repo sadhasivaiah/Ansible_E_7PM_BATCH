@@ -2,10 +2,13 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Install and start Apache2 on Debian-based systems
+    - name: Install a
       apt:
         name: apache2
         state: present
+      when: ansible_os_family == "Debian"  
+    
+    - name: Start apache2
       service:
         name: apache2
         state: started
@@ -14,7 +17,9 @@
     - name: Install and start Apache2 on RedHat-based systems
       yum:
         name: httpd
-        state: present
+        state: present 
+      when: ansible_os_family == "RedHat"
+    - name: Start  
       service:
         name: httpd
         state: started
